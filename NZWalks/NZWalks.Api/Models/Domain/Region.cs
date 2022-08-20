@@ -9,5 +9,8 @@
         public double Lat { get; set; }
         public double Long { get; set; }
         public long Population { get; set; }
+
+        // Navigation Property: Establishes the connection between all our domain objects in the database, when we run EF Core.
+        public IEnumerable<Walk> Walks { get; set; } 
     }
 }

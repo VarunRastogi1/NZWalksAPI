@@ -13,13 +13,13 @@ namespace NZWalks.Api.Controllers
         public RegionsController(IRegionRepository regionRepository, IMapper mapper)
         {
             this.regionRepository = regionRepository;
-            Mapper = mapper;
+            this.mapper = mapper;
         }
         
         [HttpGet]
-        public IActionResult GetAllRegions()
+        public async Task<IActionResult> GetAllRegions()
         {
-            var regions= regionRepository.GetAll();
+            var regions= await regionRepository.GetAllAsync();
 
             // return DTO regions
             //Mapping Domain Region with DTO Region without automapper

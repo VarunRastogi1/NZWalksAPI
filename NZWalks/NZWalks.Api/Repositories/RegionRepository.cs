@@ -12,6 +12,7 @@ namespace NZWalks.Api.Repositories
         {
             this.nZWalksDbContext = nZWalksDbContext;
         }
+
         public async Task<IEnumerable<Region>> GetAllAsync()
         {
             return await nZWalksDbContext.Regions.ToListAsync();
@@ -20,6 +21,14 @@ namespace NZWalks.Api.Repositories
         public async Task<Region> GetAsync(Guid id)
         {
             var region= await nZWalksDbContext.Regions.FirstOrDefaultAsync(x =>x.Id == id);
+            return region;
+        }
+
+        public async Task<Region> AddAsync(Region region)
+        {
+            region.Id = Guid.NewGuid();
+            await nZWalksDbContext.AddAsync(region);
+            await nZWalksDbContext.SaveChangesAsync();
             return region;
         }
     }

@@ -93,5 +93,33 @@ namespace NZWalks.Api.Controllers
             return CreatedAtAction(nameof(GetRegionAsync), new { id = regionDTO.Id }, regionDTO);
         }
 
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteRegionAsync(Guid id)
+        {
+            //Get region from database
+            var region= await regionRepository.DeleteAsync(id);
+
+            //If null- NotFound
+            if (region == null)
+            {
+                return NotFound();
+            }
+
+            //Convert response back to DTO
+            var regionDTO = new Models.DTO.Region()
+            {
+                Id = region.Id,
+                Code = region.Code,
+                Area = region.Area,
+                Lat = region.Lat,
+                Long = region.Long,
+                Name = region.Name,
+                Population = region.Population
+            };
+
+            // Return Ok response
+            return Ok(region);
+        }
     }
 }

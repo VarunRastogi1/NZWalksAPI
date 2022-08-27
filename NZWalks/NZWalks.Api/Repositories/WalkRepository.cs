@@ -20,5 +20,14 @@ namespace NZWalks.Api.Repositories
                 .Include(x=> x.WalkDifficulty)
                 .ToListAsync();
         }
+
+        public Task<Walk> GetAsync(Guid id)
+        {
+            return nZWalksDbContext.Walks
+                .Include(x => x.Region)                             //Adding Navigation properties for GetWalks
+                .Include(x => x.WalkDifficulty)
+                .FirstOrDefaultAsync(x=>x.Id==id);
+                
+        }
     }
 }

@@ -13,12 +13,12 @@ namespace NZWalks.Api.Repositories
             this.nZWalksDbContext = nZWalksDbContext;
         }
 
-        
+
         public async Task<IEnumerable<Walk>> GetAllAsync()
         {
             return await nZWalksDbContext.Walks
                 .Include(x => x.Region)                             //Adding Navigation properties for GetAllWalks
-                .Include(x=> x.WalkDifficulty)
+                .Include(x => x.WalkDifficulty)
                 .ToListAsync();
         }
 
@@ -27,8 +27,8 @@ namespace NZWalks.Api.Repositories
             return nZWalksDbContext.Walks
                 .Include(x => x.Region)                             //Adding Navigation properties for GetWalks
                 .Include(x => x.WalkDifficulty)
-                .FirstOrDefaultAsync(x=>x.Id==id);
-                
+                .FirstOrDefaultAsync(x => x.Id == id);
+
         }
 
         public async Task<Walk> AddAsync(Walk walk)
@@ -56,5 +56,22 @@ namespace NZWalks.Api.Repositories
             }
             return null;
         }
+
+        public async Task<Walk> DeleteAsync(Guid id)
+        {
+            var existingWalk = await nZWalksDbContext.Walks.FindAsync(id);
+
+            if (existingWalk == null)
+            {
+                return null;
+            }
+            nZWalksDbContext.Walks.Remove(existingWalk);
+            await nZWalksDbContext.SaveChangesAsync();
+            return existingWalk;
+
+        }
+
+
+
     }
 }

@@ -123,7 +123,7 @@ namespace NZWalks.Api.Controllers
             {
                 return NotFound();
             }
-            //IF RESPONSE FOUND, CONVERT IT BACK INTO DTO
+            //IF RESPONSE FOUND, CONVERT IT INTO DTO
             var walkDTO= mapper.Map<Models.DTO.Walk>(walkDomain);
             return Ok(walkDTO);
 
